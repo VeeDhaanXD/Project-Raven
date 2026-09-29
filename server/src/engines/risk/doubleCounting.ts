@@ -1,0 +1,2 @@
+export interface LossComponent{loss_component_id:string;category:string;amount:number;sourceType:string;basis:string;}
+export function detectDoubleCounting(items:LossComponent[]){const groups=new Map<string,LossComponent[]>();for(const x of items){const k=x.category.toLowerCase().trim();const a=groups.get(k)||[];a.push(x);groups.set(k,a);}const duplicateCategories=[...groups.entries()].filter(([,a])=>a.length>1).map(([k,a])=>({category:k,ids:a.map(x=>x.loss_component_id)}));return{hasPotentialOverlap:duplicateCategories.length>0,duplicateCategories};}

@@ -1,0 +1,4 @@
+import express from 'express';import cors from 'cors';import mongoose from 'mongoose';import helmet from 'helmet';import rateLimit from 'express-rate-limit';import {config,validateConfig} from './config/index.js';import authRoutes from './routes/auth.js';import apiRoutes from './routes/api.js';
+validateConfig(true);const app=express();app.use(helmet());app.use(cors({origin:config.clientUrl,credentials:true}));app.use(express.json({limit:'2mb'}));app.use(rateLimit({windowMs:60000,max:240,standardHeaders:true,legacyHeaders:false}));
+app.get('/api/health',(_req,res)=>res.json({data:{status:'online',demoMode:config.demoMode,timestamp:new Date().toISOString()},meta:{}}));app.use('/api/auth',authRoutes);app.use('/api',apiRoutes);
+mongoose.connect(config.mongoUri).then(()=>app.listen(config.port,()=>console.log(`RAVEN server listening on ${config.port}`))).catch(e=>{console.error(e);process.exit(1);});

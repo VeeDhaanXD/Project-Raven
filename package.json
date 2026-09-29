@@ -1,0 +1,14 @@
+{
+  "name":"raven-ps26105",
+  "private":true,
+  "version":"2.0.0",
+  "scripts":{
+    "install:all":"npm --prefix server install && npm --prefix client install",
+    "dev:client":"npm --prefix client run dev",
+    "dev:server":"npm --prefix server run dev",
+    "build":"npm --prefix client run build && npm --prefix server run lint",
+    "lint":"npm --prefix client run lint && npm --prefix server run lint",
+    "test":"npm --prefix server run test",
+    "seed":"npm --prefix server run seed"
+  }
+}
